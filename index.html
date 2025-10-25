@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fa">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ربات YLZ Company</title>
+  <style>
+    body { font-family: sans-serif; direction: rtl; background:#f5f7fa; padding:20px; }
+    #chat { max-width:600px; margin:0 auto; background:white; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); padding:20px; }
+    .msg { padding:10px; margin:8px 0; border-radius:10px; line-height:1.5; }
+    .bot { background:#e3f2fd; text-align:left; }
+    .user { background:#fff3e0; text-align:right; }
+    #input { width: calc(100% - 90px); padding:8px; border-radius:8px; border:1px solid #ccc; }
+    #send { padding:8px 12px; border:none; background:#007bff; color:white; border-radius:8px; cursor:pointer; }
+    #send:hover { background:#0069d9; }
+  </style>
+</head>
+<body>
+  <div id="chat">
+    <div id="messages"></div>
+
+    <div style="display:flex; gap:8px; margin-top:12px;">
+      <input id="input" placeholder="پیام شما..." />
+      <button id="send">ارسال</button>
+    </div>
+  </div>
+
+  <script>
+    const messages = document.getElementById('messages');
+    const input = document.getElementById('input');
+    const send = document.getElementById('send');
+
+    function append(text, cls) {
+      const d = document.createElement('div');
+      d.className = 'msg ' + cls;
+      d.textContent = text;
+      messages.appendChild(d);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // مرحله ۱: خوش‌آمدگویی
+    append('سلام! خوش اومدی 🌷', 'bot');
+
+    // مرحله ۲: بعد از ۱ ثانیه بپرسه چطور می‌تونه کمک کنه
+    setTimeout(() => {
+      append('چطوری می‌تونم کمکتون کنم؟ 🤖', 'bot');
+    }, 1000);
+
+    function botReply() {
+      return 'لطفاً جهت اطلاعات بیشتر وارد لینک زیر شوید 👇\nhttps://www.instagram.com/ylzcompany.ir';
+    }
+
+    send.addEventListener('click', () => {
+      const txt = input.value.trim();
+      if (!txt) return;
+      append(txt, 'user');
+      input.value = '';
+      setTimeout(() => append(botReply(), 'bot'), 500);
+    });
+
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') send.click();
+    });
+  </script>
+</body>
+</html>
